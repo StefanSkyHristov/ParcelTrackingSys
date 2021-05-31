@@ -1,0 +1,183 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Branch;
+use App\Models\Parcel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+class ParcelController extends Controller
+{
+    public function create()
+    {
+        $branches = Branch::all();
+        return view('parcel.create', compact('branches'));
+    }
+
+    public function index()
+    {
+        $parcels = Parcel::paginate(10);
+        return view('parcel.index', compact('parcels'));
+    }
+
+    public function numberExists($number)
+    {
+        return Parcel::where('tracking_number', $number)->exists();
+    }
+
+    public function generateTrackingNumber()
+    {
+        $number = mt_rand(000000000, 999999999);
+
+        if($this -> numberExists($number))
+        {
+            return $this -> generateTrackingNumber();
+        }
+
+        return $number;
+    }
+
+    public function store()
+    {
+       $inputs = request()->validate([
+            'sender_name'=>'required|max:100',
+            'recipient_name'=>'required|max:100',
+            'sender_address'=>'required|min:10|max:255',
+            'recipient_address'=>'required|min:10|max:255',
+            'sender_contact'=>'required|min:10|max:15',
+            'recipient_contact'=>'required|min:10|max:15',
+            'branch_id' =>'required_if:delivery_type,=,0',
+            'length'=>'required',
+            'width'=>'required',
+            'height'=>'required',
+            'weight'=>'required',
+        ]);
+
+        if(request('delivery_type') == true)
+        {
+             $deliveryType = 1;
+        }
+        else
+        {
+             $deliveryType = 0;
+        }
+
+        if(request('branch_selection') == 'Select Branch')
+        {
+            $branchId = 0;
+        }
+        else
+        {
+            $branchId = request('branch_selection');
+        }
+
+        Parcel::create([
+            'sender_name' => request('sender_name'),
+            'recipient_name' => request('recipient_name'),
+            'sender_address' => request('sender_address'),
+            'recipient_address' => request('recipient_address'),
+            'sender_contact' => request('sender_contact'),
+            'recipient_contact' => request('recipient_contact'),
+            'delivery_type' => $deliveryType,
+            'branch_id' => $branchId,
+            'length' => request('length'),
+            'width' => request('width'),
+            'height' => request('height'),
+            'weight' => request('weight'),
+            'user_id' => Auth::user()->id,
+            'updated_by' => Auth::user()->id,
+            'tracking_number' => $this -> generateTrackingNumber(),
+            'price' => request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
+            request('weight') * 0.5
+        ]);
+
+        Session::flash('created_message', 'Order submitted successfully. Check your mailbox to see your
+        tracking number');
+
+        return back();
+    }
+
+    public function edit(Parcel $parcel)
+    {
+        $branches = Branch::all();
+        return view('parcel.edit', compact('parcel', 'branches'));
+    }
+
+    public function updateStatus(Parcel $parcel)
+    {
+        $parcel->status_description = request('status_description');
+        $currentStatus = $parcel->status;
+        switch(request('status_description'))
+        {
+            case "Collected by Courrier":
+                $parcel->status = 1;
+                break;
+            case "Shipped to Branch":
+                $parcel->status = 2;
+                break;
+            case "Collected from Branch":
+                $parcel->status = 3;
+                break;
+            case "Shipped to Address":
+                $parcel->status = 4;
+                break;
+            case "Failed Delivery":
+                $parcel->status = 99;
+                break;
+            default:
+                $parcel->status = $currentStatus;
+        }
+
+        if($parcel->isDirty('status_description'))
+        {
+            $parcel->save();
+            Session::flash('updated_status_message', 'Status of '.$parcel->tracking_number.' updated successfully.');
+        }
+        else
+        {
+            Session::flash('updated_status_message', 'Status of '.$parcel->tracking_number.' has not been changed.');
+        }
+        return redirect()->route('parcel.index');
+    }
+
+    public function update(Parcel $parcel)
+    {
+        $parcel->sender_name = request('sender_name');
+        $parcel->recipient_name = request('recipient_name');
+        $parcel->sender_address = request('sender_address');
+        $parcel->recipient_address = request('recipient_address');
+        $parcel->sender_contact = request('sender_contact');
+        $parcel->recipient_contact = request('recipient_contact');
+        $parcel->weight = request('weight');
+        $parcel->width = request('width');
+        $parcel->height = request('height');
+        $parcel->length = request('length');
+
+        //If toggle button is clicked, compare previous toggle values to change toggle value properly.
+        if(request('delivery_type') == true)
+        {
+            if($parcel->delivery_type == 0)
+            {
+                $parcel->delivery_type = 1;
+            }
+        }
+        else
+        {
+            if($parcel->delivery_type == 1)
+            {
+                $parcel->delivery_type = 0;
+            }
+        }
+
+        if(request('branch_selection'))
+        {
+            $parcel->branch_id = request('branch_selection');
+        }
+
+        $parcel->save();
+        Session::flash('updated_message', 'Details of '.$parcel->tracking_number. ' updated successfully.');
+        return redirect()->route('parcel.index');
+    }
+}
