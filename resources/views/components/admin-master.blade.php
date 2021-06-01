@@ -224,14 +224,14 @@
               </li>
               <!-- Will display all orders waiting to be picked up-->
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('parcel.submitted')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Submitted orders</p>
                 </a>
               </li>
               <!-- Shows which courier picked up which parcel -->
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('parcel.with_courrier')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>With courier</p>
                 </a>

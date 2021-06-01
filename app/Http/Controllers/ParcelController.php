@@ -22,6 +22,20 @@ class ParcelController extends Controller
         return view('parcel.index', compact('parcels'));
     }
 
+    public function submitted()
+    {
+        $submittedParcels = Parcel::where('status', 0)->paginate(10);
+
+        return view('parcel.submitted', compact('submittedParcels'));
+    }
+
+    public function withCourrier()
+    {
+        $collectedParcels = Parcel::where('status', 1)->paginate(10);
+
+        return view('parcel.withCourrier', compact('collectedParcels'));
+    }
+
     public function numberExists($number)
     {
         return Parcel::where('tracking_number', $number)->exists();
@@ -46,8 +60,8 @@ class ParcelController extends Controller
             'recipient_name'=>'required|max:100',
             'sender_address'=>'required|min:10|max:255',
             'recipient_address'=>'required|min:10|max:255',
-            'sender_contact'=>'required|min:10|max:15',
-            'recipient_contact'=>'required|min:10|max:15',
+            'sender_contact'=>'required|min:10|max:17',
+            'recipient_contact'=>'required|min:10|max:17',
             'branch_id' =>'required_if:delivery_type,=,0',
             'length'=>'required',
             'width'=>'required',

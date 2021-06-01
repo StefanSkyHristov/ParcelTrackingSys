@@ -28,6 +28,9 @@ Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logou
 Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
 Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
 Route::get('/parcel/show', 'App\Http\Controllers\ParcelController@index')->name('parcel.index');
+
+Route::get('/parcel/show/submitted', 'App\Http\Controllers\ParcelController@submitted')->name('parcel.submitted');
+Route::get('/parcel/show/withcourrier', 'App\Http\Controllers\ParcelController@withCourrier')->name('parcel.with_courrier');
 Route::patch('/parcel/{parcel}/updateStatus', 'App\Http\Controllers\ParcelController@updateStatus')->name('parcel.updateStatus');
 Route::get('/parcel/{parcel}/edit', 'App\Http\Controllers\ParcelController@edit')->name('parcel.edit');
 Route::patch('/parcel/{parcel}/update', 'App\Http\Controllers\ParcelController@update')->name('parcel.update');
