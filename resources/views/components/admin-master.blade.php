@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- overlayScrollbars -->
@@ -16,9 +17,12 @@
   <link rel="stylesheet" href="{{asset('dist/css/alt/bootstrap.css')}}">
 
   <link rel="stylesheet" href="{{asset('dist/css/alt/dataTables.bootstrap4.min.css')}}">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  @yield('styling')
 
 </head>
 <body class="sidebar-mini layout-fixed sidebar-collapse" style="height: auto;">
@@ -282,6 +286,12 @@
             </ul>
           </li>
           <x-branches.branches-navbar></x-branches.branches-navbar>
+          <li class="nav-item">
+            <a href="{{route('parcel.track')}}" class="nav-link">
+              <i class="nav-icon fas fa-search"></i>
+              <p>Track Order</p>
+            </a>
+          </li>
           <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
             <a href="../calendar.html" class="nav-link">

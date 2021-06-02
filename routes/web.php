@@ -34,6 +34,9 @@ Route::get('/parcel/show/withcourrier', 'App\Http\Controllers\ParcelController@w
 Route::patch('/parcel/{parcel}/updateStatus', 'App\Http\Controllers\ParcelController@updateStatus')->name('parcel.updateStatus');
 Route::get('/parcel/{parcel}/edit', 'App\Http\Controllers\ParcelController@edit')->name('parcel.edit');
 Route::patch('/parcel/{parcel}/update', 'App\Http\Controllers\ParcelController@update')->name('parcel.update');
+Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
+Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
+Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
 
 Route::get('/branch/create', 'App\Http\Controllers\BranchController@create')->name('branch.create');
 Route::post('/branch/store', 'App\Http\Controllers\BranchController@store')->name('branch.store');

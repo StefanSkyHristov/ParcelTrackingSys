@@ -48,7 +48,8 @@
                 <div class="col-6 mt-3 ml-auto">
                     <label id="branch_label" for="branch_selection">Select branch to deliver to</label>
                     <select id="branch_selection" name="branch_selection" class="form-control">
-                      <option selected value="{{$parcel->branch_id}}">{{$parcel->branches->name.",".$parcel->branches->address}}</option>
+                      <option selected value="{{$parcel->branch_id}}">@if($parcel->branch_id == 0) None @else {{$parcel->branches->name.",".$parcel->branches->address}} @endif
+                      </option>
                       @foreach ($branches as $branch)
                           <option value="{{$branch->id}}">{{$branch->name.",".$branch->address}}</option>
                       @endforeach

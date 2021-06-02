@@ -20,6 +20,6 @@ class Parcel extends Model
 
     public function branches()
     {
-        return $this->belongsTo('App\Models\Branch', 'id');
+        return $this->belongsTo('App\Models\Branch', 'branch_id');
     }
 }

@@ -4,6 +4,8 @@
         <div class="alert alert-success">{{Session::get('updated_status_message')}}</div>
     @elseif (Session::has('updated_message'))
         <div class="alert alert-success">{{Session::get('updated_message')}}</div>
+    @elseif (Session::has('deleted_message'))
+        <div class="alert alert-success">{{Session::get('deleted_message')}}</div>
     @endif
     <div class="card-body">
         <div class="card shadow">
@@ -32,11 +34,18 @@
                                 <td>{{$parcel->status_description}}</td>
                                 <td>{{$parcel->updated_by}}</td>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{$parcel->id}}">
-                                        <i class="fa fa-pen"></i>
-                                    </button>
-                                    @include('parcel.parcelModal')
+                                    <div class="d-flex">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{$parcel->id}}">
+                                            <i class="fa fa-pen"></i>
+                                        </button>
+                                        @include('parcel.parcelModal')
+
+                                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$parcel->id}}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        @include('parcel.deleteModal')
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

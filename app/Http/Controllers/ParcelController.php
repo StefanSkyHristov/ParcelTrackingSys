@@ -29,6 +29,49 @@ class ParcelController extends Controller
         return view('parcel.submitted', compact('submittedParcels'));
     }
 
+    public function track()
+    {
+        $parcels = Parcel::all();
+        return view('parcel.track', compact('parcels'));
+    }
+
+    public function progress()
+    {
+        $trackingNumber = request('tracking_number');
+
+        $parcel = Parcel::where('tracking_number', $trackingNumber)->first();
+        if(!$parcel)
+        {
+            Session::flash('not_found_message', 'The following parcel does not exist. Please check your tracking number.');
+            return redirect()->route('parcel.track');
+        }
+        else
+        {
+            $status = $parcel->status;
+            if($status == 0)
+            {
+                return view('parcel.progress.submitted');
+            }
+            else if($status == 1)
+            {
+                return view('parcel.progress.collectedfordelivery');
+            }
+            else if($status == 2)
+            {
+                return view('parcel.progress.shippedToBranch');
+            }
+            else if($status == 4)
+            {
+                return view('parcel.progress.shippedToAddress');
+            }
+            else
+            {
+                return view('parcel.progress.collected');
+            }
+        }
+
+    }
+
     public function withCourrier()
     {
         $collectedParcels = Parcel::where('status', 1)->paginate(10);
@@ -192,6 +235,14 @@ class ParcelController extends Controller
 
         $parcel->save();
         Session::flash('updated_message', 'Details of '.$parcel->tracking_number. ' updated successfully.');
+        return redirect()->route('parcel.index');
+    }
+
+    public function destroy(Parcel $parcel)
+    {
+        $parcel->delete();
+        Session::flash('deleted_message', 'Parcel '.$parcel->tracking_number. ' has been deleted successfully.');
+
         return redirect()->route('parcel.index');
     }
 }

@@ -25,6 +25,6 @@ class Branch extends Model
 
     public function parcels()
     {
-        return $this->hasMany('App\Model\Parcels');
+        return $this->hasMany('App\Model\Parcel', 'id');
     }
 }
