@@ -38,6 +38,8 @@ Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name
 Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
 Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
 
+Route::get('/admin/users', 'App\Http\Controllers\UserController@index')->name('users.index');
+
 Route::get('/branch/create', 'App\Http\Controllers\BranchController@create')->name('branch.create');
 Route::post('/branch/store', 'App\Http\Controllers\BranchController@store')->name('branch.store');
 Route::get('/branch/show', 'App\Http\Controllers\BranchController@index')->name('branch.index');

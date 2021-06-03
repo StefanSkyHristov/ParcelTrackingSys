@@ -39,6 +39,14 @@
           </div>
         </div>
         <div class="input-group mb-3">
+            <input id="username" name="username" type="username" class="form-control" placeholder="User name">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+        <div class="input-group mb-3">
           <input id="email" name="email" type="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">

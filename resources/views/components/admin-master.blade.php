@@ -147,6 +147,14 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fa fa-power-off"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href="{{route('logout')}}" class="dropdown-item">Logout</a>
+        </div>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -266,9 +274,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../forms/general.html" class="nav-link">
+                <a href="{{route('users.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>General Elements</p>
+                  <p>All Users</p>
                 </a>
               </li>
               <li class="nav-item">

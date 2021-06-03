@@ -69,7 +69,6 @@ class ParcelController extends Controller
                 return view('parcel.progress.collected');
             }
         }
-
     }
 
     public function withCourrier()
