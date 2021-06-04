@@ -175,7 +175,7 @@
           <img src="{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{Auth::user()->name}}</a>
+          <a href="{{route('users.edit', Auth::user()->id)}}" class="d-block">{{Auth::user()->name}}</a>
         </div>
       </div>
 

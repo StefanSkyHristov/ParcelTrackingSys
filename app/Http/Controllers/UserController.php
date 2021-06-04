@@ -37,4 +37,12 @@ class UserController extends Controller
         Session::flash('updated_message', 'User details updated Successfully.');
         return back();
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        Session::flash('deleted_message', 'User profile has been deleted successfully.');
+
+        return back();
+    }
 }

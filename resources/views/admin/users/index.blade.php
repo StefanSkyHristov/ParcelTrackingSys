@@ -2,6 +2,10 @@
     @section('title', 'View all User accounts')
     @section('content')
 
+    @if (Session::has('deleted_message'))
+        <div class="alert alert-success">{{Session::get('deleted_message')}}</div>
+    @endif
+
     <div class="card-body">
         <div class="card shadow">
             <div class="table-responsive">
@@ -13,6 +17,7 @@
                             <th>User Avatar</th>
                             <th>Created On</th>
                             <th>Updated On</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,6 +30,14 @@
                                 </td>
                                 <td>{{$user->created_at->diffForHumans()}}</td>
                                 <td>{{$user->updated_at->diffForHumans()}}</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteUserModal{{$user->id}}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        @include('admin.users.deleteUserModal')
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -35,6 +48,7 @@
                             <th>User Avatar</th>
                             <th>Created On</th>
                             <th>Updated On</th>
+                            <th>Options</th>
                         </tr>
                     </tfoot>
                 </table>
