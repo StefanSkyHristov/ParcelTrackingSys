@@ -11,8 +11,10 @@
                 @method('PUT')
                 <div class="row mx-2">
                     <div class="col-md-3">
-                        @if (!$user->avatar)
-                            <img src="{{asset('storage/images/avatar.png')}}" alt="" class="img-thumbnail rounded-circle">
+                        @if ($user->avatar == 0)
+                            <div class="image">
+                                <img src="{{asset('storage/images/AdminLTELogo.png')}}" alt="" class="img-thumbnail rounded-circle">
+                            </div>
                         @else
                             <div class="image">
                                 <img src="{{$user->avatar}}" alt="" class="img-thumbnail rounded-circle">
@@ -45,6 +47,76 @@
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
+        </div>
+
+        <div class="card-body">
+            <div class="card shadow">
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Attach</th>
+                                <th>Detach</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($roles as $role)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox"
+                                        @foreach ($user->roles as $userRole)
+                                            @if ($userRole->slug == $role->slug)
+                                                checked
+                                            @endif
+                                        @endforeach>
+                                    </td>
+                                    <td>{{$role->id}}</td>
+                                    <td>{{$role->name}}</td>
+                                    <td>{{$role->slug}}</td>
+                                    <td>
+                                        <form action="{{route('users.attach', $user->id)}}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <input type="hidden" name="role" id="role" value="{{$role->id}}">
+                                            <button type="submit" class="btn btn-primary"
+                                            @if ($user->roles->contains($role))
+                                                disabled
+                                            @endif>Attach</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{{route('users.detach', $user->id)}}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <input type="hidden" name="role" id="role" value="{{$role->id}}">
+                                            <button type="submit" class="btn btn-danger"
+                                            @if (!$user->roles->contains($role))
+                                                disabled
+                                            @endif>Detach</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Attach</th>
+                                <th>Detach</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
     @endsection
 </x-admin-master>

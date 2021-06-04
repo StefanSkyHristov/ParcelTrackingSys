@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +17,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(User $user)
@@ -43,6 +45,18 @@ class UserController extends Controller
         $user->delete();
         Session::flash('deleted_message', 'User profile has been deleted successfully.');
 
+        return back();
+    }
+
+    public function attach(User $user)
+    {
+        $user->roles()->attach(request('role'));
+        return back();
+    }
+
+    public function detach(User $user)
+    {
+        $user->roles()->detach(request('role'));
         return back();
     }
 }

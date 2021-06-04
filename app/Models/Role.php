@@ -11,6 +11,8 @@ class Role extends Model
 
     protected $guarded = [];
 
+    protected $fillable = ['name', 'slug'];
+
     public function users()
     {
         return $this->hasMany(User::class);
