@@ -39,6 +39,8 @@ Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress'
 Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
 
 Route::get('/admin/users', 'App\Http\Controllers\UserController@index')->name('users.index');
+Route::get('/admin/users/{user}/edit', 'App\Http\Controllers\UserController@edit')->name('users.edit');
+Route::put('/admin/users/{user}/update', 'App\Http\Controllers\UserController@update')->name('users.update');
 
 Route::get('/branch/create', 'App\Http\Controllers\BranchController@create')->name('branch.create');
 Route::post('/branch/store', 'App\Http\Controllers\BranchController@store')->name('branch.store');

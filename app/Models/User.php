@@ -64,4 +64,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Branch');
     }
+
+    public function getAvatarAttribute($value)
+    {
+        if(strpos($value, 'https://') !== FALSE || strpos($value, 'http://') !== FALSE)
+            {
+                return $value;
+            }
+        return asset('storage/' . $value);
+    }
 }
