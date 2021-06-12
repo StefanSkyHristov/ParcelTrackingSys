@@ -46,8 +46,11 @@ Route::put('/admin/users/{user}/attach', 'App\Http\Controllers\UserController@at
 Route::put('/admin/users/{user}/detach', 'App\Http\Controllers\UserController@detach')->name('users.detach');
 
 Route::get('/branch/create', 'App\Http\Controllers\BranchController@create')->name('branch.create');
-Route::post('/branch/store', 'App\Http\Controllers\BranchController@store')->name('branch.store');
 Route::get('/branch/show', 'App\Http\Controllers\BranchController@index')->name('branch.index');
+Route::get('/branch/{branch}/edit', 'App\Http\Controllers\BranchController@edit')->name('branch.edit');
+Route::post('/branch/store', 'App\Http\Controllers\BranchController@store')->name('branch.store');
+Route::put('branch/{branch}/update', 'App\Http\Controllers\BranchController@update')->name('branch.update');
+
 
 Route::post('/roles/store', 'App\Http\Controllers\RoleController@store')->name('roles.store');
 Route::get('/roles/show', 'App\Http\Controllers\RoleController@show')->name('roles.index');

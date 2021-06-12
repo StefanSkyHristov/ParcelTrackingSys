@@ -19,6 +19,28 @@ class BranchController extends Controller
         return view('branch.index', compact('branches'));
     }
 
+    public function edit(Branch $branch)
+    {
+        return view('branch.edit', compact('branch'));
+    }
+
+    public function update(Branch $branch)
+    {
+        $inputs = request()->validate([
+            'name' => 'string|min:6|max:100',
+            'address' => 'required',
+            'email' => 'email',
+            'contact' => 'min:10|max:16',
+            'country' => 'string|min:6|max:50',
+            'city' => 'string|min:6|max:50'
+        ]);
+
+        $branch->update($inputs);
+        Session::flash('updated_message', 'Branch details updated successfully.');
+
+        return back();
+    }
+
     public function store()
     {
         $inputs = request()->validate([

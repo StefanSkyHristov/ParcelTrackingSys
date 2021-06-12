@@ -19,7 +19,7 @@
                     <tbody>
                         @foreach ($branches as $branch)
                             <tr>
-                                <td>{{$branch->name}}</td>
+                                <td><a href="{{route('branch.edit', $branch->id)}}">{{$branch->name}}</a></td>
                                 <td>{{$branch->address}}</td>
                                 <td>{{$branch->email}}</td>
                                 <td>{{$branch->contact}}</td>
