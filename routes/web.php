@@ -52,6 +52,7 @@ Route::get('/branch/show', 'App\Http\Controllers\BranchController@index')->name(
 Route::post('/roles/store', 'App\Http\Controllers\RoleController@store')->name('roles.store');
 Route::get('/roles/show', 'App\Http\Controllers\RoleController@show')->name('roles.index');
 Route::get('/roles/{role}/edit', 'App\Http\Controllers\RoleController@edit')->name('roles.edit');
+Route::put('/roles/{role}/update', 'App\Http\Controllers\RoleController@update')->name('roles.update');
 Route::delete('/roles/{role}/delete', 'App\Http\Controllers\RoleController@destroy')->name('roles.destroy');
 
 Route::post('/permissions/store', 'App\Http\Controllers\PermissionController@store')->name('permissions.store');

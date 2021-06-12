@@ -11,7 +11,7 @@
                 @method('PUT')
                 <div class="row mx-2">
                     <div class="col-md-3">
-                        @if ($user->avatar == 0)
+                        @if ($user->avatar == null)
                             <div class="image">
                                 <img src="{{asset('storage/images/AdminLTELogo.png')}}" alt="" class="img-thumbnail rounded-circle">
                             </div>

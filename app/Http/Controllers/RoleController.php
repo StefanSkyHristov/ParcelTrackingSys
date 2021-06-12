@@ -7,6 +7,7 @@ use App\Models\Permission;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class RoleController extends Controller
 {
@@ -45,15 +46,52 @@ class RoleController extends Controller
         return back();
     }
 
-    public function attach(Role $role)
-    {
-        $role->permissions()->attach(request('permission'));
-        return back();
-    }
+    // public function attach(Role $role, Permission $permission)
+    // {
+    //     $role->permissions()->attach($permission);
+    //     return back();
+    // }
 
-    public function detach(Role $role)
+    // public function detach(Role $role)
+    // {
+    //     $role->permissions()->detach(request('permission'));
+    //     return back();
+    // }
+
+    public function update(Role $role)
     {
-        $role->permissions()->detach(request('permission'));
-        return back();
+        $permissions = request('permissions');
+        $permissionsToDetach = request('detachPermissions');
+
+        $rolePermissionIds = $role->permissions;
+
+        if($rolePermissionIds->isEmpty())
+        {
+            foreach($permissions as $permission)
+            {
+                $role->permissions()->attach($permission);
+                Session::flash('status_updated', 'Role permissions updated successfully.');
+            }
+        }
+        else
+        {
+           if(request()->has('permissions'))
+           {
+               foreach($permissions as $permission)
+               {
+                   $role->permissions()->attach($permission);
+                   Session::flash('status_updated', 'Role permissions updated successfully.');
+               }
+           }
+           if(request()->has('detachPermissions'))
+           {
+               foreach($permissionsToDetach as $permissionToDetach)
+               {
+                   $role->permissions()->detach($permissionToDetach);
+                   Session::flash('status_updated', 'Role permissions updated successfully.');
+               }
+           }
+        }
+         return back();
     }
 }
