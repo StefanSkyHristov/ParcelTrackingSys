@@ -14,6 +14,7 @@
                             <th>Branch Contact</th>
                             <th>Branch Country</th>
                             <th>Branch City</th>
+                            <th>Delete Branch</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,6 +26,12 @@
                                 <td>{{$branch->contact}}</td>
                                 <td>{{$branch->country}}</td>
                                 <td>{{$branch->city}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$branch->id}}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    @include('branch.deleteModal')
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -36,6 +43,7 @@
                             <th>Branch Contact</th>
                             <th>Branch Country</th>
                             <th>Branch City</th>
+                            <th>Delete Branch</th>
                         </tr>
                     </tfoot>
                 </table>

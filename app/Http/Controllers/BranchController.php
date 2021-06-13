@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Parcel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -37,6 +38,21 @@ class BranchController extends Controller
 
         $branch->update($inputs);
         Session::flash('updated_message', 'Branch details updated successfully.');
+
+        return back();
+    }
+
+    public function destroy(Branch $branch)
+    {
+        $parcels = $branch->parcels;
+        foreach($parcels as $parcel)
+        {
+            $parcel->branch_id = 0;
+            $parcel->save();
+        }
+
+        $branch->delete();
+        Session::flash('deleted_message', 'Branch has been deleted successfully');
 
         return back();
     }

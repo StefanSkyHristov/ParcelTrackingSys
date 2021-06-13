@@ -172,7 +172,11 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+          @if (Auth::user()->avatar == 'http://127.0.0.1:8000/storage')
+            <img src="{{asset('Storage/images/AdminLTELogo.png')}}" class="img-circle elevation-2" alt="User Image">
+          @else
+            <img src="{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+          @endif
         </div>
         <div class="info">
           <a href="{{route('users.edit', Auth::user()->id)}}" class="d-block">{{Auth::user()->name}}</a>
@@ -264,35 +268,9 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Authorization settings
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('users.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Users</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('roles.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Roles</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('permissions.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Permissions</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @if (Auth::user()->hasRole('Administrator'))
+            <x-authorizations.authorization-navbar></x-authorizations.authorization-navbar>
+          @endif
           <x-branches.branches-navbar></x-branches.branches-navbar>
           <li class="nav-item">
             <a href="{{route('parcel.track')}}" class="nav-link">

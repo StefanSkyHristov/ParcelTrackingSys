@@ -73,4 +73,32 @@ class User extends Authenticatable
             }
         return asset('storage/' . $value);
     }
+
+    public function isAdmin()
+    {
+        $roles = $this->roles;
+
+        foreach($roles as $role)
+        {
+            if($role->name == "Administrator")
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRole($role_passed)
+    {
+        foreach($this->roles as $role)
+        {
+            if($role_passed == $role->name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
