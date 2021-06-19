@@ -49,74 +49,78 @@
             </form>
         </div>
 
-        <div class="card-body">
-            <div class="card shadow">
-                <div class="table-responsive">
-                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Status</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Attach</th>
-                                <th>Detach</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($roles as $role)
+        @if (Auth::user()->hasRole('Administrator'))
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <input type="checkbox"
-                                        @foreach ($user->roles as $userRole)
-                                            @if ($userRole->slug == $role->slug)
-                                                checked
-                                            @endif
-                                        @endforeach>
-                                    </td>
-                                    <td>{{$role->id}}</td>
-                                    <td>{{$role->name}}</td>
-                                    <td>{{$role->slug}}</td>
-                                    <td>
-                                        <form action="{{route('users.attach', $user->id)}}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-
-                                            <input type="hidden" name="role" id="role" value="{{$role->id}}">
-                                            <button type="submit" class="btn btn-primary"
-                                            @if ($user->roles->contains($role))
-                                                disabled
-                                            @endif>Attach</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form action="{{route('users.detach', $user->id)}}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-
-                                            <input type="hidden" name="role" id="role" value="{{$role->id}}">
-                                            <button type="submit" class="btn btn-danger"
-                                            @if (!$user->roles->contains($role))
-                                                disabled
-                                            @endif>Detach</button>
-                                        </form>
-                                    </td>
+                                    <th>Status</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Attach</th>
+                                    <th>Detach</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Status</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Attach</th>
-                                <th>Detach</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($roles as $role)
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox"
+                                            @foreach ($user->roles as $userRole)
+                                                @if ($userRole->slug == $role->slug)
+                                                    checked
+                                                    disabled
+                                                @endif
+                                            @endforeach>
+                                        </td>
+                                        <td>{{$role->id}}</td>
+                                        <td>{{$role->name}}</td>
+                                        <td>{{$role->slug}}</td>
+                                        <td>
+                                            <form action="{{route('users.attach', $user->id)}}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+
+                                                <input type="hidden" name="role" id="role" value="{{$role->id}}">
+                                                <button type="submit" class="btn btn-primary"
+                                                @if ($user->roles->contains($role))
+                                                    disabled
+                                                @endif>Attach</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{{route('users.detach', $user->id)}}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+
+                                                <input type="hidden" name="role" id="role" value="{{$role->id}}">
+                                                <button type="submit" class="btn btn-danger"
+                                                @if (!$user->roles->contains($role))
+                                                    disabled
+                                                @endif>Detach</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Attach</th>
+                                    <th>Detach</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
+
     @endsection
 </x-admin-master>

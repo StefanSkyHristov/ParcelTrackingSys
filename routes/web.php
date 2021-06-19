@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -28,17 +29,14 @@ Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->na
 Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
 Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
 
+Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
 Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
 
 Route::middleware(['Role:Administrator', 'auth'])->group(function () {
 
     Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
 
-    Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
-
     Route::get('/admin/users', 'App\Http\Controllers\UserController@index')->name('users.index');
-    Route::get('/admin/users/{user}/edit', 'App\Http\Controllers\UserController@edit')->name('users.edit');
-    Route::put('/admin/users/{user}/update', 'App\Http\Controllers\UserController@update')->name('users.update');
     Route::delete('/admin/users/{user}/delete', 'App\Http\Controllers\UserController@destroy')->name('users.destroy');
     Route::put('/admin/users/{user}/attach', 'App\Http\Controllers\UserController@attach')->name('users.attach');
     Route::put('/admin/users/{user}/detach', 'App\Http\Controllers\UserController@detach')->name('users.detach');
@@ -71,4 +69,14 @@ Route::middleware(['Role:Courrier', 'auth'])->group(function () {
     Route::patch('/parcel/{parcel}/updateStatus', 'App\Http\Controllers\ParcelController@updateStatus')->name('parcel.updateStatus');
     Route::get('/parcel/{parcel}/edit', 'App\Http\Controllers\ParcelController@edit')->name('parcel.edit');
     Route::patch('/parcel/{parcel}/update', 'App\Http\Controllers\ParcelController@update')->name('parcel.update');
+});
+
+Route::middleware(['auth', 'can:view,user'])->group(function () {
+
+    Route::get('/admin/users/{user}/edit', 'App\Http\Controllers\UserController@edit')->name('users.edit');
+});
+
+Route::middleware(['auth', 'can:update,user'])->group(function () {
+
+    Route::put('/admin/users/{user}/update', 'App\Http\Controllers\UserController@update')->name('users.update');
 });

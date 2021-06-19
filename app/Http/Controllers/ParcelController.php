@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Parcel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class ParcelController extends Controller
@@ -145,6 +146,8 @@ class ParcelController extends Controller
             $branchId = request('branch_selection');
         }
 
+        $trackingNumber = $this -> generateTrackingNumber();
+
         Parcel::create([
             'sender_name' => request('sender_name'),
             'recipient_name' => request('recipient_name'),
@@ -160,13 +163,24 @@ class ParcelController extends Controller
             'weight' => request('weight'),
             'user_id' => Auth::user()->id,
             'updated_by' => Auth::user()->id,
-            'tracking_number' => $this -> generateTrackingNumber(),
+            'tracking_number' => $trackingNumber,
             'price' => request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
             request('weight') * 0.5
         ]);
 
         Session::flash('created_message', 'Order submitted successfully. Check your mailbox to see your
         tracking number');
+
+        $data = [
+            'title' => 'Parcel delivery details',
+            'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
+            your tracking number is: '. $trackingNumber. '.'. "\r\n". 'You can track the progress of your
+            order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
+        ];
+
+        Mail::send('emails.test', $data, function($message) {
+            $message->to(Auth::user()->email, 'Stefan')->subject('Parcel delivery details');
+        });
 
         return back();
     }
