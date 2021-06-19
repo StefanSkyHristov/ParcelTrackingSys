@@ -7,16 +7,17 @@
                     <div><i class="fas fa-user"></i></div> Order Placed
                 </li>
                 <li class="step active">
-                    <div><i class="fas fa-bread-slice"></i></div> In transit
+                    <div><i class="fas fa-bread-slice"></i></div> Collected for Delivery
                 </li>
-                <li class="step">
-                    <div><i class="fas fa-truck"></i></div> Out for delivery
+                <li class="step active">
+                    <div><i class="fas fa-truck"></i></div> Shipped to Branch
                 </li>
                 <li class="step ">
-                    <div><i class="fas fa-birthday-cake"></i></div> Delivered
+                    <div><i class="fas fa-birthday-cake"></i></div> Collected
                 </li>
             </ul>
-            <h5 class="text-center"><b>In transit</b>. The order has been shipped!</h5>
+            <h5 class="text-center"><b>Delivered to Branch</b>. The order has been delivered to the desired
+            branch successfully and is awaiting collection.</h5>
         </div>
     </div>
     @endsection

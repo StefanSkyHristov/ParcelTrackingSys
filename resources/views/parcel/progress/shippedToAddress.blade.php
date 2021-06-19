@@ -1,20 +1,27 @@
-<div class="card card-timeline px-2 border-none">
-    <ul class="bs4-order-tracking">
-        <li class="step active">
-            <div><i class="fas fa-user"></i></div> Order Placed
-        </li>
-        <li class="step active">
-            <div><i class="fas fa-bread-slice"></i></div> In transit
-        </li>
-        <li class="step">
-            <div><i class="fas fa-truck"></i></div> Out for delivery
-        </li>
-        <li class="step ">
-            <div><i class="fas fa-birthday-cake"></i></div> Delivered
-        </li>
-    </ul>
-    <h5 class="text-center"><b>In transit</b>. The order has been shipped!</h5>
-</div>
+<x-admin-master>
+    @section('content')
+    <div class="col-md-12">
+        <div class="card card-primary card-outline border-none">
+            <ul class="bs4-order-tracking">
+                <li class="step active">
+                    <div><i class="fas fa-user"></i></div> Order Placed
+                </li>
+                <li class="step active">
+                    <div><i class="fas fa-bread-slice"></i></div> Collected for Delivery
+                </li>
+                <li class="step active">
+                    <div><i class="fas fa-truck"></i></div> Shipped to Destination
+                </li>
+                <li class="step active">
+                    <div><i class="fas fa-birthday-cake"></i></div> Collected
+                </li>
+            </ul>
+            <h5 class="text-center"><b>Delivered to Customer</b>. The order has been delivered to the
+            customer and signed off successfully.</h5>
+        </div>
+    </div>
+    @endsection
+</x-admin-master>
 
 <style>
     .bs4-order-tracking {
@@ -57,7 +64,8 @@
     font-size: 12px;
     background: #878788;
     border-radius: 50%;
-    margin: auto
+    margin: auto;
+    padding: 8px
 }
 
 .bs4-order-tracking li:after {
@@ -94,7 +102,7 @@
     background: #dc3545
 }
 
-.card-timeline {
+.card-outline {
     background-color: #fff;
     z-index: 0
 }

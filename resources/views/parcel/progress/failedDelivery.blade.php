@@ -9,14 +9,15 @@
                 <li class="step active">
                     <div><i class="fas fa-bread-slice"></i></div> Collected for Delivery
                 </li>
-                <li class="step active">
-                    <div><i class="fas fa-truck"></i></div> Shipped to Branch
+                <li class="step ">
+                    <div><i class="fas fa-truck"></i></div> Shipped to Address
                 </li>
-                <li class="step active">
+                <li class="step ">
                     <div><i class="fas fa-birthday-cake"></i></div> Collected
                 </li>
             </ul>
-            <h5 class="text-center"><b>Collected by Customer</b>. The order has been collected by the customer.</h5>
+            <h5 class="text-center"><b>Delivery Failed</b>. The customer was not available to collect the
+            delivery. Another delivery attempt will be made as soon as possible.</h5>
         </div>
     </div>
     @endsection

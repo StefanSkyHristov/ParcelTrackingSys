@@ -254,14 +254,14 @@
               </li>
               <!-- Shows parcels delivered to branches and not picked up-->
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('parcel.to_be_collected')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>To be collected</p>
                 </a>
               </li>
               <!-- Shows deliveries to address which did not complete-->
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('parcel.failed_delivery')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Failed Delivery</p>
                 </a>

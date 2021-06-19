@@ -64,6 +64,10 @@ class ParcelController extends Controller
             {
                 return view('parcel.progress.shippedToAddress');
             }
+            else if($status == 99)
+            {
+                return view('parcel.progress.failedDelivery');
+            }
             else
             {
                 return view('parcel.progress.collected');
@@ -76,6 +80,18 @@ class ParcelController extends Controller
         $collectedParcels = Parcel::where('status', 1)->paginate(10);
 
         return view('parcel.withCourrier', compact('collectedParcels'));
+    }
+
+    public function toBeCollected()
+    {
+        $parcelsToCollect = Parcel::where('status', 2)->paginate(10);
+        return view('parcel.toBeCollected', compact('parcelsToCollect'));
+    }
+
+    public function failedDelivery()
+    {
+        $failedParcels = Parcel::where('status', 99)->paginate(10);
+        return view('parcel.deliveryFailed', compact('failedParcels'));
     }
 
     public function numberExists($number)
@@ -188,6 +204,7 @@ class ParcelController extends Controller
 
         if($parcel->isDirty('status_description'))
         {
+            $parcel->updated_by = Auth::user()->id;
             $parcel->save();
             Session::flash('updated_status_message', 'Status of '.$parcel->tracking_number.' updated successfully.');
         }

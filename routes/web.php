@@ -61,11 +61,13 @@ Route::middleware(['Role:Administrator', 'auth'])->group(function () {
     Route::delete('branch/{branch}/delete', 'App\Http\Controllers\BranchController@destroy')->name('branch.destroy');
 });
 
-Route::middleware(['Role:Courrier'])->group(function () {
+Route::middleware(['Role:Courrier', 'auth'])->group(function () {
 
     Route::get('/parcel/show', 'App\Http\Controllers\ParcelController@index')->name('parcel.index');
     Route::get('/parcel/show/submitted', 'App\Http\Controllers\ParcelController@submitted')->name('parcel.submitted');
     Route::get('/parcel/show/withcourrier', 'App\Http\Controllers\ParcelController@withCourrier')->name('parcel.with_courrier');
+    Route::get('/parcel/show/tobecollected', 'App\Http\Controllers\ParcelController@toBeCollected')->name('parcel.to_be_collected');
+    Route::get('/parcel/show/faileddelivery', 'App\Http\Controllers\ParcelController@failedDelivery')->name('parcel.failed_delivery');
     Route::patch('/parcel/{parcel}/updateStatus', 'App\Http\Controllers\ParcelController@updateStatus')->name('parcel.updateStatus');
     Route::get('/parcel/{parcel}/edit', 'App\Http\Controllers\ParcelController@edit')->name('parcel.edit');
     Route::patch('/parcel/{parcel}/update', 'App\Http\Controllers\ParcelController@update')->name('parcel.update');

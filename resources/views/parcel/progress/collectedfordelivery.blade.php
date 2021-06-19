@@ -16,7 +16,8 @@
                     <div><i class="fas fa-birthday-cake"></i></div> Collected
                 </li>
             </ul>
-            <h5 class="text-center"><b>In transit</b>. The order has been shipped!</h5>
+            <h5 class="text-center"><b>Collected by Courrier</b>. The order has been collected by a courrier
+            and is in transit.</h5>
         </div>
     </div>
     @endsection
