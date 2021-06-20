@@ -25,16 +25,19 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
 
-Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
-Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
-Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
+Route::middleware(['auth'])->group(function () {
 
-Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
-Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
+    Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
+    Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
+    Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
+    Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
+});
 
 Route::middleware(['Role:Administrator', 'auth'])->group(function () {
 
     Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
+
+    Route::delete('/parcel/{parcel}/delete', 'App\Http\Controllers\ParcelController@destroy')->name('parcel.destroy');
 
     Route::get('/admin/users', 'App\Http\Controllers\UserController@index')->name('users.index');
     Route::delete('/admin/users/{user}/delete', 'App\Http\Controllers\UserController@destroy')->name('users.destroy');

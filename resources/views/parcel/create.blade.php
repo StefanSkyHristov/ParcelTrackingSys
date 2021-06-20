@@ -119,3 +119,35 @@
 
 });
 </script>
+
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyC0iKILlW7TW8aoJobwWnFiPeXExfjZjN8&libraries=places&callback=initialize" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+            $("#lat_area").addClass("d-none");
+            $("#long_area").addClass("d-none");
+        });
+    </script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function initialize() {
+            var senderAddress = document.getElementById('sender_address');
+            var autocomplete = new google.maps.places.Autocomplete(senderAddress);
+
+            var recipientAddress = document.getElementById('recipient_address');
+            var recipientAutocomplete = new google.maps.places.Autocomplete(recipientAddress);
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                $('#latitude').val(place.geometry['location'].lat());
+                $('#longitude').val(place.geometry['location'].lng());
+                // --------- show lat and long ---------------
+                $("#lat_area").removeClass("d-none");
+                $("#long_area").removeClass("d-none");
+            });
+
+            recipientAutocomplete.addDomListener('place_changed', function() {
+                var recipientPlace = recipientAutocomplete.getPlace();
+            });
+        }
+    </script>
