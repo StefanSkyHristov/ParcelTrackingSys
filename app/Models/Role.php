@@ -22,4 +22,17 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function hasPermission($permission_passed)
+    {
+        foreach($this->permissions as $permission)
+        {
+            if($permission_passed == $permission->slug)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

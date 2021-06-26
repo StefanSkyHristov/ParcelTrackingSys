@@ -13,6 +13,7 @@
                             <th>Recipient Contact</th>
                             <th>Status</th>
                             <th>Updated By</th>
+                            <th>Last updated</th>
                             <th>Update Parcel Status</th>
                         </tr>
                     </thead>
@@ -26,12 +27,22 @@
                                 <td>{{$parcel->recipient_contact}}</td>
                                 <td>{{$parcel->status_description}}</td>
                                 <td>{{$parcel->updated_by}}</td>
+                                <td>{{$parcel->updated_at->diffForHumans()}}</td>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{$parcel->id}}">
-                                        <i class="fa fa-pen"></i>
-                                    </button>
-                                    @include('parcel.parcelModal')
+                                    <div class="d-flex">
+                                            <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{$parcel->id}}">
+                                            <i class="fa fa-pen"></i>
+                                        </button>
+                                        @include('parcel.parcelModal')
+
+                                        @can('delete',Auth::user())
+                                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$parcel->id}}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            @include('parcel.deleteModal')
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -45,6 +56,7 @@
                             <th>Recipient Contact</th>
                             <th>Status</th>
                             <th>Updated By</th>
+                            <th>Last updated</th>
                             <th>Update Parcel Status</th>
                         </tr>
                     </tfoot>

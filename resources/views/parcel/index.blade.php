@@ -20,6 +20,7 @@
                             <th>Recipient Contact</th>
                             <th>Status</th>
                             <th>Updated By</th>
+                            <th>Last updated</th>
                             <th>Update Parcel Status</th>
                         </tr>
                     </thead>
@@ -33,6 +34,7 @@
                                 <td>{{$parcel->recipient_contact}}</td>
                                 <td>{{$parcel->status_description}}</td>
                                 <td>{{$parcel->updated_by}}</td>
+                                <td>{{$parcel->updated_at->diffForHumans()}}</td>
                                 <td>
                                     <div class="d-flex">
                                         <!-- Button trigger modal -->
@@ -41,10 +43,12 @@
                                         </button>
                                         @include('parcel.parcelModal')
 
-                                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$parcel->id}}">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                        @include('parcel.deleteModal')
+                                        @can('delete',Auth::user())
+                                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{$parcel->id}}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            @include('parcel.deleteModal')
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -59,6 +63,7 @@
                             <th>Recipient Contact</th>
                             <th>Status</th>
                             <th>Updated By</th>
+                            <th>Last updated</th>
                             <th>Update Parcel Status</th>
                         </tr>
                     </tfoot>

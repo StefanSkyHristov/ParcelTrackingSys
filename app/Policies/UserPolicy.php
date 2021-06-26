@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Parcel;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -59,12 +60,19 @@ class UserPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\User  $model deleted as not needed
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
-        //
+        foreach($user->roles as $role)
+        {
+            if($role->hasPermission('delete-parcel'))
+           {
+                return true;
+           }
+        }
+        return false;
     }
 
     /**
