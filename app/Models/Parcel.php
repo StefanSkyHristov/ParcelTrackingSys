@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Http\Traits\Hashidable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Parcel extends Model
 {
     use HasFactory;
+    use Hashidable;
 
     protected $fillable = ['tracking_number', 'branch_id', 'sender_name', 'recipient_name',
     'sender_address', 'recipient_address', 'sender_contact','recipient_contact', 'delivery_type', 'length',

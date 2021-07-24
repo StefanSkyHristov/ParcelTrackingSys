@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Vinkla\Hashids\Facades\Hashids;
 
 class UserController extends Controller
 {
@@ -18,8 +19,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::all();
-        return view('admin.users.edit', compact('user', 'roles'));
+         $roles = Role::all();
+         return view('admin.users.edit', compact('user', 'roles'));
+        //echo(Hashids::connection(User::class)->encode($user->getKey()));
     }
 
     public function update(User $user)

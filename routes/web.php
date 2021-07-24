@@ -28,7 +28,7 @@ Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logou
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
-    Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parce.store');
+    Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parcel.store');
     Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
     Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
 });

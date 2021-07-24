@@ -115,8 +115,8 @@ class ParcelController extends Controller
     public function store()
     {
        $inputs = request()->validate([
-            'sender_name'=>'required|alpha_dash|max:100',
-            'recipient_name'=>'required|alpha_dash|max:100',
+            'sender_name'=>'required|max:100',
+            'recipient_name'=>'required|max:100',
             'sender_address'=>'required|min:10|max:255',
             'recipient_address'=>'required|min:10|max:255',
             'sender_contact'=>'required|min:10|max:17',

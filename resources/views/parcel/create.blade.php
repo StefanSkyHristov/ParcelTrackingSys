@@ -16,7 +16,7 @@
                @foreach ($errors->all() as $error)
                 {{ $error }}
                @endforeach
-                <form action="{{route('parce.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('parcel.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
