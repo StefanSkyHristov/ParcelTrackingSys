@@ -24,6 +24,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
+Route::get('/parcel/checkout', 'App\Http\Controllers\PaymentController@index')->name('payment.index');
+Route::post('/parcel/payment', 'App\Http\Controllers\PaymentController@checkout')->name('payment.checkout');
 
 Route::middleware(['auth'])->group(function () {
 

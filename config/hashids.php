@@ -41,6 +41,10 @@ return [
             'salt' => \App\Models\User::class.'7623e9b0009feff8e024a689d6ef59ce',
             'length' => 5,
         ],
+        \App\Models\Parcel::class => [
+            'salt' => \App\Models\Parcel::class.'7623e9b0009feff8e024a689d6ef59ce',
+            'length' => 3,
+        ],
 
         // 'main' => [
         //     'salt' => 'your-salt-string',

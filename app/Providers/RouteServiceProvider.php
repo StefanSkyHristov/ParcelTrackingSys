@@ -53,9 +53,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('{user}', function ($value, $route) {
             return $this->getModel(\App\Models\User::class, $value);
         });
-        // Route::bind('parcel', function ($value, $route) {
-        //     return $this->getModel(\App\Models\Product::class, $value);
-        // });
+
+        Route::bind('{parcel}', function ($value, $route) {
+            return $this->getModel(\App\Models\Parcel::class, $value);
+        });
     }
 
     /**

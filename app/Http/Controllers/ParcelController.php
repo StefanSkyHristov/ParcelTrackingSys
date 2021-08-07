@@ -148,41 +148,61 @@ class ParcelController extends Controller
 
         $trackingNumber = $this -> generateTrackingNumber();
 
-        Parcel::create([
-            'sender_name' => request('sender_name'),
-            'recipient_name' => request('recipient_name'),
-            'sender_address' => request('sender_address'),
-            'recipient_address' => request('recipient_address'),
-            'sender_contact' => request('sender_contact'),
-            'recipient_contact' => request('recipient_contact'),
-            'delivery_type' => $deliveryType,
-            'branch_id' => $branchId,
-            'length' => request('length'),
-            'width' => request('width'),
-            'height' => request('height'),
-            'weight' => request('weight'),
-            'user_id' => Auth::user()->id,
-            'updated_by' => Auth::user()->id,
-            'tracking_number' => $trackingNumber,
-            'price' => request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
-            request('weight') * 0.5
-        ]);
+        $parcel = new Parcel;
+        $parcel->sender_name = request('sender_name');
+        $parcel->recipient_name = request('recipient_name');
+        $parcel->sender_address = request('sender_address');
+        $parcel->recipient_address = request('recipient_address');
+        $parcel->sender_contact = request('sender_contact');
+        $parcel->recipient_contact = request('recipient_contact');
+        $parcel->delivery_type = $deliveryType;
+        $parcel->branch_id = $branchId;
+        $parcel->length = request('length');
+        $parcel->width = request('width');
+        $parcel->height = request('height');
+        $parcel->weight = request('weight');
+        $parcel->user_id = Auth::user()->id;
+        $parcel->updated_by = Auth::user()->id;
+        $parcel->tracking_number = $trackingNumber;
+        $parcel->price = request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
+             request('weight') * 0.5;
+        // Parcel::create([
+        //     'sender_name' => request('sender_name'),
+        //     'recipient_name' => request('recipient_name'),
+        //     'sender_address' => request('sender_address'),
+        //     'recipient_address' => request('recipient_address'),
+        //     'sender_contact' => request('sender_contact'),
+        //     'recipient_contact' => request('recipient_contact'),
+        //     'delivery_type' => $deliveryType,
+        //     'branch_id' => $branchId,
+        //     'length' => request('length'),
+        //     'width' => request('width'),
+        //     'height' => request('height'),
+        //     'weight' => request('weight'),
+        //     'user_id' => Auth::user()->id,
+        //     'updated_by' => Auth::user()->id,
+        //     'tracking_number' => $trackingNumber,
+        //     'price' => request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
+        //     request('weight') * 0.5
+        // ]);
 
-        Session::flash('created_message', 'Order submitted successfully. Check your mailbox to see your
-        tracking number');
+        // Session::flash('created_message', 'Order submitted successfully. Check your mailbox to see your
+        // tracking number');
 
-        $data = [
-            'title' => 'Parcel delivery details',
-            'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
-            your tracking number is: '. $trackingNumber. '.'. "\r\n". 'You can track the progress of your
-            order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
-        ];
+        // $data = [
+        //     'title' => 'Parcel delivery details',
+        //     'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
+        //     your tracking number is: '. $trackingNumber. '.'. "\r\n". 'You can track the progress of your
+        //     order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
+        // ];
 
-        Mail::send('emails.test', $data, function($message) {
-            $message->to(Auth::user()->email, 'Stefan')->subject('Parcel delivery details');
-        });
+        // Mail::send('emails.test', $data, function($message) {
+        //     $message->to(Auth::user()->email, 'Stefan')->subject('Parcel delivery details');
+        // });
 
-        return back();
+        //return back();
+        return redirect()->route('payment.index')->with(['parcel'=>$parcel]);
+        // return redirect()->action([PaymentController::class, 'index'], ['parcel'=>$parcel]);
     }
 
     public function edit(Parcel $parcel)

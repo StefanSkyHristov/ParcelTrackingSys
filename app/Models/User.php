@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Cashier\Billable;
 use App\Http\Traits\Hashidable;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
