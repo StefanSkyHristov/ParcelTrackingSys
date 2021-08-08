@@ -205,6 +205,46 @@ class ParcelController extends Controller
         // return redirect()->action([PaymentController::class, 'index'], ['parcel'=>$parcel]);
     }
 
+    public function save()
+    {
+        $parcelSession = Session::get('parcel');
+        $parcel = json_decode($parcelSession);
+
+        Parcel::create([
+            'sender_name' => $parcel->sender_name,
+            'recipient_name' => $parcel->recipient_name,
+            'sender_address' => $parcel->sender_address,
+            'recipient_address' => $parcel->recipient_address,
+            'sender_contact' => $parcel->sender_contact,
+            'recipient_contact' => $parcel->recipient_contact,
+            'delivery_type' => $parcel->delivery_type,
+            'branch_id' => $parcel->branch_id,
+            'length' => $parcel->length,
+            'width' => $parcel->width,
+            'height' => $parcel->height,
+            'weight' => $parcel->weight,
+            'user_id' => $parcel->user_id,
+            'updated_by' => $parcel->updated_by,
+            'tracking_number' => $parcel->tracking_number,
+            'price' => $parcel->price
+        ]);
+
+        $data = [
+            'title' => 'Parcel delivery details',
+            'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
+            your tracking number is: '. $parcel->tracking_number. '.'. "\r\n". 'You can track the progress of your
+            order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
+        ];
+
+        Mail::send('emails.test', $data, function($message) {
+            $message->to(Auth::user()->email, 'Stefan')->subject('Parcel delivery details');
+        });
+
+        Session::flash('message', 'Order submitted successfully. Check your mailbox to see your
+        tracking number');
+        return back();
+    }
+
     public function edit(Parcel $parcel)
     {
         $branches = Branch::all();

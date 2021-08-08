@@ -24,15 +24,16 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
-Route::get('/parcel/checkout', 'App\Http\Controllers\PaymentController@index')->name('payment.index');
-Route::post('/parcel/payment', 'App\Http\Controllers\PaymentController@checkout')->name('payment.checkout');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
     Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parcel.store');
+    Route::get('/parcel/checkout', 'App\Http\Controllers\PaymentController@index')->name('payment.index');
+    Route::post('/parcel/payment', 'App\Http\Controllers\PaymentController@checkout')->name('payment.checkout');
     Route::get('/parcel/track', 'App\Http\Controllers\ParcelController@track')->name('parcel.track');
     Route::post('/parcel/progress', 'App\Http\Controllers\ParcelController@progress')->name('parcel.progress');
+    Route::get('/parcel/save', 'App\Http\Controllers\ParcelController@save')->name('parcel.save');
 });
 
 Route::middleware(['Role:Administrator', 'auth'])->group(function () {

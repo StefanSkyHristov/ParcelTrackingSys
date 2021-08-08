@@ -30,31 +30,12 @@ class PaymentController extends Controller
             $user->createOrGetStripeCustomer();
             $user->updateDefaultPaymentMethod($paymentMethod);
             $user->charge($parcel->price * 100, $paymentMethod);
-            Parcel::create([
-                'sender_name' => $parcel->sender_name,
-                'recipient_name' => $parcel->recipient_name,
-                'sender_address' => $parcel->sender_address,
-                'recipient_address' => $parcel->recipient_address,
-                'sender_contact' => $parcel->sender_contact,
-                'recipient_contact' => $parcel->recipient_contact,
-                'delivery_type' => $parcel->delivery_type,
-                'branch_id' => $parcel->branch_id,
-                'length' => $parcel->length,
-                'width' => $parcel->width,
-                'height' => $parcel->height,
-                'weight' => $parcel->weight,
-                'user_id' => $parcel->user_id,
-                'updated_by' => $parcel->updated_by,
-                'tracking_number' => $parcel->tracking_number,
-                'price' => $parcel->price
-            ]);
         }
         catch (\Exception $exception)
         {
             return back()->with('error', $exception->getMessage());
         }
 
-        Session::flash('message', 'Product purchased successfully!');
-        return back();
+        return redirect()->route('parcel.save')->with(['parcel' => $parcelSession]);
     }
 }
