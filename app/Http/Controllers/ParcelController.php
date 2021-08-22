@@ -286,7 +286,7 @@ class ParcelController extends Controller
         {
             Session::flash('updated_status_message', 'Status of '.$parcel->tracking_number.' has not been changed.');
         }
-        return redirect()->route('parcel.index');
+        return back();
     }
 
     public function update(Parcel $parcel)

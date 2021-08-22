@@ -192,35 +192,37 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="../../index.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
+               @if (Auth::user()->hasRole('Administrator'))
+                <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                    Dashboard
+                    <i class="right fas fa-angle-left"></i>
+                    </p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="../../index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../../index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                    <a href="../../index.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Dashboard v1</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="../../index2.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Dashboard v2</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="../../index3.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Dashboard v3</p>
+                    </a>
+                    </li>
+                </ul>
+                </li>
+               @endif
           <li class="nav-item has-treeview">
             <a href="../widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -274,8 +276,8 @@
           </li>
           @if (Auth::user()->hasRole('Administrator'))
             <x-authorizations.authorization-navbar></x-authorizations.authorization-navbar>
+            <x-branches.branches-navbar></x-branches.branches-navbar>
           @endif
-          <x-branches.branches-navbar></x-branches.branches-navbar>
           <li class="nav-item">
             <a href="{{route('parcel.track')}}" class="nav-link">
               <i class="nav-icon fas fa-search"></i>
@@ -579,11 +581,11 @@
             <h1>@yield('title')</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+            {{-- <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Layout</a></li>
               <li class="breadcrumb-item active">Fixed Layout</li>
-            </ol>
+            </ol> --}}
           </div>
         </div>
       </div><!-- /.container-fluid -->
