@@ -74,7 +74,7 @@ class User extends Authenticatable
             {
                 return $value;
             }
-        return asset('storage/' . $value);
+        return asset('public/storage/' . $value);
     }
 
     public function isAdmin()
