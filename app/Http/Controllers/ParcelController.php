@@ -201,6 +201,7 @@ class ParcelController extends Controller
         // });
 
         //return back();
+        $encryptedParcel = encrypt($parcel);
         return redirect()->route('payment.index')->with(['parcel'=>$parcel]);
         // return redirect()->action([PaymentController::class, 'index'], ['parcel'=>$parcel]);
     }
