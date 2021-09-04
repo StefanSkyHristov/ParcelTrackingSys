@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
+Route::stripeWebhooks('webhooks-event');
 
 Route::middleware(['auth'])->group(function () {
 
