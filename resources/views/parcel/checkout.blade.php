@@ -18,9 +18,11 @@
             <div id="card-element"></div>
 
             <div class="form-group mt-3">
-                <button id="card-button" class="btn btn-primary">
-                    Checkout @convert($parcel->price*100)
-                </button>
+                @if ($parcel)
+                    <button id="card-button" class="btn btn-primary">
+                        Checkout @convert($parcel->price*100)
+                    </button>
+                @endif
             </div>
         </form>
     </div>
