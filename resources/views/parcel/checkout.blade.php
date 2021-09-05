@@ -19,7 +19,7 @@
 
             <div class="form-group mt-3">
                 <button id="card-button" class="btn btn-primary">
-                    Process Payment
+                    Checkout @convert($parcel->price*100)
                 </button>
             </div>
         </form>

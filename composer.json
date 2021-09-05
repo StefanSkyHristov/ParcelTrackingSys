@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "spatie/laravel-stripe-webhooks": "^2.6",
+        "symfony/intl": "^5.3",
         "vinkla/hashids": "^9.1"
     },
     "require-dev": {
