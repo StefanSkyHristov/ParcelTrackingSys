@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
 Route::stripeWebhooks('webhooks-event');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'XSS'])->group(function () {
 
     Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
     Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parcel.store');
@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/parcel/save', 'App\Http\Controllers\ParcelController@save')->name('parcel.save');
 });
 
-Route::middleware(['Role:Administrator', 'auth'])->group(function () {
+Route::middleware(['Role:Administrator', 'auth', 'XSS'])->group(function () {
 
     Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
 
@@ -66,7 +66,7 @@ Route::middleware(['Role:Administrator', 'auth'])->group(function () {
     Route::delete('branch/{branch}/delete', 'App\Http\Controllers\BranchController@destroy')->name('branch.destroy');
 });
 
-Route::middleware(['Role:Courrier', 'auth'])->group(function () {
+Route::middleware(['Role:Courrier', 'auth', 'XSS'])->group(function () {
 
     Route::get('/parcel/show', 'App\Http\Controllers\ParcelController@index')->name('parcel.index');
     Route::get('/parcel/show/submitted', 'App\Http\Controllers\ParcelController@submitted')->name('parcel.submitted');
@@ -78,12 +78,12 @@ Route::middleware(['Role:Courrier', 'auth'])->group(function () {
     Route::patch('/parcel/{parcel}/update', 'App\Http\Controllers\ParcelController@update')->name('parcel.update');
 });
 
-Route::middleware(['auth', 'can:view,user'])->group(function () {
+Route::middleware(['auth', 'can:view,user', 'XSS'])->group(function () {
 
     Route::get('/admin/users/{user}/edit', 'App\Http\Controllers\UserController@edit')->name('users.edit');
 });
 
-Route::middleware(['auth', 'can:update,user'])->group(function () {
+Route::middleware(['auth', 'can:update,user', 'XSS'])->group(function () {
 
     Route::put('/admin/users/{user}/update', 'App\Http\Controllers\UserController@update')->name('users.update');
 });

@@ -166,41 +166,7 @@ class ParcelController extends Controller
         $parcel->tracking_number = $trackingNumber;
         $parcel->price = request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
              request('weight') * 0.5;
-        // Parcel::create([
-        //     'sender_name' => request('sender_name'),
-        //     'recipient_name' => request('recipient_name'),
-        //     'sender_address' => request('sender_address'),
-        //     'recipient_address' => request('recipient_address'),
-        //     'sender_contact' => request('sender_contact'),
-        //     'recipient_contact' => request('recipient_contact'),
-        //     'delivery_type' => $deliveryType,
-        //     'branch_id' => $branchId,
-        //     'length' => request('length'),
-        //     'width' => request('width'),
-        //     'height' => request('height'),
-        //     'weight' => request('weight'),
-        //     'user_id' => Auth::user()->id,
-        //     'updated_by' => Auth::user()->id,
-        //     'tracking_number' => $trackingNumber,
-        //     'price' => request('length') * 0.2 + request('width') * 0.1 + request('height') * 0.3 +
-        //     request('weight') * 0.5
-        // ]);
 
-        // Session::flash('created_message', 'Order submitted successfully. Check your mailbox to see your
-        // tracking number');
-
-        // $data = [
-        //     'title' => 'Parcel delivery details',
-        //     'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
-        //     your tracking number is: '. $trackingNumber. '.'. "\r\n". 'You can track the progress of your
-        //     order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
-        // ];
-
-        // Mail::send('emails.test', $data, function($message) {
-        //     $message->to(Auth::user()->email, 'Stefan')->subject('Parcel delivery details');
-        // });
-
-        //return back();
         $encryptedParcel = encrypt($parcel);
         return redirect()->route('payment.index')->with(['parcel'=>$parcel]);
         // return redirect()->action([PaymentController::class, 'index'], ['parcel'=>$parcel]);
@@ -292,6 +258,20 @@ class ParcelController extends Controller
 
     public function update(Parcel $parcel)
     {
+        $inputs = request()->validate([
+            'sender_name'=>'required|max:100',
+            'recipient_name'=>'required|max:100',
+            'sender_address'=>'required|min:10|max:255',
+            'recipient_address'=>'required|min:10|max:255',
+            'sender_contact'=>'required|min:10|max:17',
+            'recipient_contact'=>'required|min:10|max:17',
+            'branch_id' =>'required_if:delivery_type,=,0',
+            'length'=>'required',
+            'width'=>'required',
+            'height'=>'required',
+            'weight'=>'required',
+        ]);
+
         $parcel->sender_name = request('sender_name');
         $parcel->recipient_name = request('recipient_name');
         $parcel->sender_address = request('sender_address');
@@ -302,6 +282,7 @@ class ParcelController extends Controller
         $parcel->width = request('width');
         $parcel->height = request('height');
         $parcel->length = request('length');
+
 
         //If toggle button is clicked, compare previous toggle values to change toggle value properly.
         if(request('delivery_type') == true)

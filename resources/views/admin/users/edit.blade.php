@@ -5,6 +5,9 @@
     @if (Session::has('updated_message'))
         <div class="alert alert-success">{{Session::get('updated_message')}}</div>
     @endif
+    @foreach ($errors->all() as $error)
+        {{ $error }}
+    @endforeach
         <div class="col-md-12">
             <form action="{{route('users.update', $user->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf

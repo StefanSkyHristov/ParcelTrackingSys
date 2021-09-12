@@ -2,6 +2,9 @@
     @section('title', 'Edit Parcel details: '.$parcel->tracking_number)
     @section('content')
 
+    @foreach ($errors->all() as $error)
+        {{ $error }}
+    @endforeach
     <form action="{{route('parcel.update', $parcel->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
