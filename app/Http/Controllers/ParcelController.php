@@ -198,7 +198,7 @@ class ParcelController extends Controller
 
         $data = [
             'title' => 'Parcel delivery details',
-            'content' => 'Hello '. request('sender_name').'!'."\r\n".'Your order has been submitted successfully and
+            'content' => 'Hello '. $parcel->sender_name.'!'."\r\n".'Your order has been submitted successfully and
             your tracking number is: '. $parcel->tracking_number. '.'. "\r\n". 'You can track the progress of your
             order on the company website.'. "\r\n". "\r\n". 'Stay safe!'
         ];
