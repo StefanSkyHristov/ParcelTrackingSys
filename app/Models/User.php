@@ -71,9 +71,9 @@ class User extends Authenticatable
     public function getAvatarAttribute($value)
     {
         if(strpos($value, 'https://') !== FALSE || strpos($value, 'http://') !== FALSE)
-            {
-                return $value;
-            }
+        {
+            return $value;
+        }
         return asset('storage/' . $value);
     }
 

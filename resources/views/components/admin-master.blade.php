@@ -163,12 +163,13 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link"><!-- ../../dist/img/AdminLTELogo.png-->
-      <img src="{{asset('storage/images/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{asset('/storage/images/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">@if (Auth::user()->roles()->exists())
         {{Auth::user()->roles()->first()->name}}
       @else
           AdminLTE 3
-      @endif</span>
+      @endif
+    </span>
     </a>
 
     <!-- Sidebar -->
@@ -176,10 +177,11 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          @if (Auth::user()->avatar == 'http://127.0.0.1:8000/storage')
-            <img src="{{asset('Storage/images/AdminLTELogo.png')}}" class="img-circle elevation-2" alt="User Image">
+          {{-- @if (Auth::user()->avatar == 'http://127.0.0.1:8000/storage') --}}
+          @if(!(Auth::user()->avatar))
+            <img src="{{'storage/images/AdminLTELogo.png'}}" class="img-circle elevation-2" alt="User Image">
           @else
-            <img src="{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{Auth::user()->avatar}}" class="brand-image img-circle elevation-3" alt="User Image" height="30" width="30">
           @endif
         </div>
         <div class="info">
