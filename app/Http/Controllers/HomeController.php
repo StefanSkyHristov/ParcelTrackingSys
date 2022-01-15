@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', '2FA']);
     }
 
     /**
@@ -35,5 +35,10 @@ class HomeController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function twoFARedirect()
+    {
+        return redirect(route('home')); 
     }
 }
