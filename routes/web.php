@@ -29,7 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout')->name('logout');
 Route::stripeWebhooks('webhooks-event');
 
-Route::middleware(['auth', 'XSS', '2FA'])->group(function () {
+Route::middleware(['auth', 'XSS'])->group(function () {
 
     Route::get('/parcel/create', 'App\Http\Controllers\ParcelController@create')->name('parcel.create');
     Route::post('/parcel/store', 'App\Http\Controllers\ParcelController@store')->name('parcel.store');
@@ -40,7 +40,7 @@ Route::middleware(['auth', 'XSS', '2FA'])->group(function () {
     Route::get('/parcel/save', 'App\Http\Controllers\ParcelController@save')->name('parcel.save');
 });
 
-Route::middleware(['Role:Administrator', 'auth', 'XSS', '2FA'])->group(function () {
+Route::middleware(['Role:Administrator', 'auth', 'XSS'])->group(function () {
 
     Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin.index');
 
@@ -69,7 +69,7 @@ Route::middleware(['Role:Administrator', 'auth', 'XSS', '2FA'])->group(function 
     Route::delete('branch/{branch}/delete', 'App\Http\Controllers\BranchController@destroy')->name('branch.destroy');
 });
 
-Route::middleware(['Role:Courrier', 'auth', 'XSS', '2FA'])->group(function () {
+Route::middleware(['Role:Courrier', 'auth', 'XSS'])->group(function () {
 
     Route::get('/parcel/show', 'App\Http\Controllers\ParcelController@index')->name('parcel.index');
     Route::get('/parcel/show/submitted', 'App\Http\Controllers\ParcelController@submitted')->name('parcel.submitted');
