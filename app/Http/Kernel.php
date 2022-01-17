@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'IsAdmin' => \App\Http\Middleware\IsAdmin::class,
         'Role' => \App\Http\Middleware\RoleMiddleware::class,
         'XSS' => \App\Http\Middleware\XssMiddleware::class,
+        '2FA' => \PragmaRX\Google2FALaravel\Middleware::class,
     ];
 }

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'city',
         'address',
+        'google2fa_secret'
     ];
 
     /**
@@ -37,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google2fa_secret'
     ];
 
     /**
@@ -71,9 +73,9 @@ class User extends Authenticatable
     public function getAvatarAttribute($value)
     {
         if(strpos($value, 'https://') !== FALSE || strpos($value, 'http://') !== FALSE)
-            {
-                return $value;
-            }
+        {
+            return $value;
+        }
         return asset('storage/' . $value);
     }
 
@@ -108,5 +110,15 @@ class User extends Authenticatable
     public function getRouteKey()
     {
         return Hashids::connection(User::class)->encode($this->getKey());
+    }
+
+    public function setGoogle2faSecretAttribute($value)
+    {
+         $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
     }
 }
