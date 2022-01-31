@@ -16,6 +16,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::middleware(['throttle:dDosRateLimiter'])->group(function(){
+
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -94,3 +97,4 @@ Route::middleware(['auth', 'can:update,user', 'XSS'])->group(function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
