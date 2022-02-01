@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'Role' => \App\Http\Middleware\RoleMiddleware::class,
         'XSS' => \App\Http\Middleware\XssMiddleware::class,
         '2FA' => \PragmaRX\Google2FALaravel\Middleware::class,
+        'RouteLog' => \App\Http\Middleware\RouteLogging::class,
     ];
 }
